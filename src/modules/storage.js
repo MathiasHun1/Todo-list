@@ -1,5 +1,6 @@
 import { Project } from "./project";
-import { isToday } from "date-fns";
+import { isToday, isBefore, endOfWeek, format } from "date-fns";
+import { Task } from "./tasks";
 
 class Storage {
     constructor() {
@@ -40,7 +41,14 @@ class Storage {
 
     //methods for tasks
     saveTasks() {
-        localStorage.setItem('tasks', JSON.stringify(this.getAllTasks));
+        localStorage.setItem('tasks', JSON.stringify(this.getAllTasks()));
+    }
+
+    addNewTask(project='all', desc, dueDate, status) {
+        const tasks = storage.getAllTasks()
+        const newTask = new Task(project='all', desc, dueDate, status);
+        tasks.push(newTask);
+        this.saveTasks();
     }
 
     getAllTasks() {
@@ -54,7 +62,28 @@ class Storage {
         })
         return todayTasks;
     }
+
+    getThisWeekTasks() {
+        const tasks = this.getAllTasks();
+        const endOfWeekDate = endOfWeek(new Date()); 
+        const thisWeekTasks = tasks.filter((task) => {
+            if (typeof task.dueDate !== 'object') {
+                const dueDate = new Date(task.dueDate);
+                return isBefore(dueDate, endOfWeekDate);
+            }
+            return isBefore(task.dueDate, endOfWeekDate);
+        })
+        return thisWeekTasks;
+    }
+
+    getTasksById(id) {
+        const tasks = this.getAllTasks();
+        const tasksByID = tasks.filter((task) => {
+            return task.id === id;
+        return tasksByID;
+        })
+    }
 }
 
-
-export {Storage}
+const storage = new Storage;
+export {storage}

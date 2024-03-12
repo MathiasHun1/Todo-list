@@ -1,8 +1,9 @@
-import { ProjectStorage } from "./storage";
+import { storage } from "./storage";
 
-class UI {
+export class UI {
     static loadPage() {
-        UI.renderProjects();
+        UI.renderDefProjects();
+        UI.renderOwnProjects();
     }
 
     static renderDefProjects() {
@@ -10,16 +11,24 @@ class UI {
         const thisWeek = document.querySelector('#this-week');
         const all = document.querySelector('#all');
 
-        today.addEventListener('click', renderTodayTasks);
-        thisWeek.addEventListener('click', renderThisWeekTasks);
-        all.addEventListener('click', renderAllTasks);
+        today.addEventListener('click', initTodayTasks);
+        thisWeek.addEventListener('click', initThisWeekTasks);
+        all.addEventListener('click', initAllTasks);
 
-        function renderTodayTasks () {}
-        function renderThisWeekTasks() {}
-        function renderAllTasks() {}
+        function initTodayTasks () {}
+        function initThisWeekTasks() {}
+        function initAllTasks() {}
     }
 
     static renderOwnProjects() {
-        
+        const ownProjectlist = document.querySelector('.project-list');
+        const ownProjects = storage.getOwnProjects();
+        console.log(ownProjects);
+
+        for(let i = 0; i < ownProjects.length; i++) {
+            let listItem = document.createElement('li');
+            listItem.textContent = ownProjects[i].name;
+            ownProjectlist.appendChild(listItem);
+        }
     }
 }
