@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Todo List</title>
+</head>
+<body>
+    <header id="header"></header>
+
+    <aside class="side-panel">
+        <!-- Default projects -->
+        <nav id="side-nav-menu">
+            <ul id="side-nav-list">
+                <li id="today">
+                    <img src="./images/today2.png" alt="">
+                    Today
+                </li>
+                <li id="this-week">
+                    <img src="./images/upcoming.png" alt="">
+                    This week
+                </li>
+                <li id="all">
+                    <img src="./images/all.png" alt="">
+                    ALL
+                </li>
+            </ul>
+        </nav>
+        <!-- ----------------->
+
+        <div>
+            <h2>Projects</h2>
+        </div>
+        <!-- Custom projects -->
+        <nav id="side-nav-projects">
+            <ul class="project-list">
+                <li>Hobby</li>
+                <li>Carrier stuff</li>
+                <li>Family</li>
+            </ul>
+        </nav>
+        <!-- ---------------->
+        <div class="add-new">
+            <img src="./images/plus.png" alt="">
+            <p>ADD NEW</p>
+        </div>
+    </aside>
+
+    <div class="main-container">
+        <!-- Tasks according to project -->
+        <div class="main-header">
+            <h1 id ="project-name">Hobby</h1>
+            <p id="project-desc">Theese are the tasks form my personal hobbies</p>
+        </div>
+        <div class="main-body">
+            <button id="add-task-button">Add Task +</button>
+            <div class="card">
+                <div class="card-text-cont">
+                    <input type="checkbox">
+                    <p class="card-text">Fát kivágni</p>
+                </div>
+                <p class="card-date">2031/01/01</p>
+                <div class="card-buttons-cont">
+                    <button>
+                        <img src="./images/edit.png" alt="">
+                    </button>
+                    <button>
+                        <img src="./images/delete.png" alt="">
+                    </button>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-text-cont">
+                    <input type="checkbox">
+                    <p class="card-text">Fát kivágni</p>
+                </div>
+                <p class="card-date">2031/01/01</p>
+                <div class="card-buttons-cont">
+                    <button>
+                        <img src="./images/edit.png" alt="">
+                    </button>
+                    <button>
+                        <img src="./images/delete.png" alt="">
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="bundle.js"></script>
+
+</body>
+</html>
