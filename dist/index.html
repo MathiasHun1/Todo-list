@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <title>Todo List</title>
 </head>
 <body>
@@ -11,38 +12,50 @@
 
     <aside class="side-panel">
         <!-- Default projects -->
-        <nav id="side-nav-menu">
-            <ul id="side-nav-list">
-                <li id="today">
-                    <img src="./images/today2.png" alt="">
-                    Today
-                </li>
-                <li id="this-week">
-                    <img src="./images/upcoming.png" alt="">
-                    This week
-                </li>
-                <li id="all">
-                    <img src="./images/all.png" alt="">
-                    ALL
-                </li>
-            </ul>
-        </nav>
+            <nav class="side-block one">
+                <h2>Incoming</h2>
+                <ul id="side-nav-list">
+                    <li id="today">
+                        <span class="material-symbols-outlined">priority_high</span>
+                        <p>Today</p>
+                    </li>
+                    <li id="this-week">
+                        <!-- <img src="./images/upcoming.png" alt=""> -->
+                        <span class="material-symbols-outlined">problem</span>
+                        <p>This week</p>
+                    </li>
+                    <li id="all">
+                        <!-- <img src="./images/all.png" alt=""> -->
+                        <span class="material-symbols-outlined">calendar_month</span>
+                        <p>ALL</p>
+                    </li>
+                </ul>
+            </nav>
+            <hr>
         <!-- ----------------->
 
-        <div>
+        
+        <nav class="side-block two">
             <h2>Projects</h2>
-        </div>
-        <div class="add-new">
-            <img src="./images/plus.png" alt="">
-            <p>ADD NEW</p>
-        </div>
-        <!-- Custom projects -->
-        <nav id="side-nav-projects">
-            <ul class="project-list">
-                <!-- <li>Hobby</li>
-                <li>Carrier stuff</li>
-                <li>Family</li> -->
-            </ul>
+            <div class="projectinput-container">
+                <button class="add-project-button">
+                    <p>ADD NEW</p>
+                    <p>+</p>
+                </button>
+                <div class="modal project">
+                    <input class="textinput" type="text" class="new-project-input">
+                    <div class="modalbuttons-container">
+                        <button class="project-add">ADD</button>
+                        <button class="project-cancel">CANCEL</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Custom projects -->
+            <nav id="side-nav-projects">
+                <ul class="project-list">
+                    <li><span class="material-symbols-outlined">person_edit</span>Hobby</li>
+                </ul>
+            </nav>
         </nav>
         <!-- ---------------->
     </aside>
@@ -51,10 +64,9 @@
         <!-- Tasks according to project -->
         <div class="main-header">
             <h1 id ="project-name">Hobby</h1>
-            <p id="project-desc">Theese are the tasks form my personal hobbies</p>
+            <button id="add-task-button">Add Task +</button>
         </div>
         <div class="main-body">
-            <button id="add-task-button">Add Task +</button>
             <div class="card">
                 <div class="card-text-cont">
                     <input type="checkbox">

@@ -27,7 +27,13 @@ export class UI {
 
         for(let i = 0; i < ownProjects.length; i++) {
             let listItem = document.createElement('li');
-            listItem.textContent = ownProjects[i].name;
+            let para = document.createElement('p');
+            let icon = document.createElement('span');
+            para.textContent = ownProjects[i].name;
+            icon.textContent = 'person_edit';
+            icon.classList.add('material-symbols-outlined')
+            listItem.appendChild(icon);
+            listItem.appendChild(para);
             ownProjectlist.appendChild(listItem);
         }
     }

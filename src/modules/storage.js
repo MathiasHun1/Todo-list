@@ -6,9 +6,9 @@ class Storage {
     constructor() {
         //initialize default projects
       this._defProjects= [];
-      this._defProjects.push(new Project('all', '', 'default', true));
-      this._defProjects.push(new Project('today', '', 'default', false));
-      this._defProjects.push(new Project('this week', '', 'default', false));
+      this._defProjects.push(new Project('all', 'default', true));
+      this._defProjects.push(new Project('today', 'default', false));
+      this._defProjects.push(new Project('this week', 'default', false));
         //initialize custom projects if exists
       this._ownProjects = JSON.parse(localStorage.getItem('projects')) || [];
       this._allProjects = this._defProjects.concat(this._ownProjects);
@@ -33,9 +33,9 @@ class Storage {
         return this._allProjects;
     }
 
-    addnewProject(name, desc) {
+    addnewProject(name) {
         const projects = this.getOwnProjects();
-        projects.push(new Project(name, desc));
+        projects.push(new Project(name));
         this.saveProjects();
     }
 
