@@ -8,5 +8,4 @@ const today = format(new Date(), 'yyyy-MM-dd')
 // storage.addnewProject('Peca', '')
 // storage.addNewTask('peca', 'venni kukoricát', format(new Date('2024-03-18'), 'yyyy-MM-dd'), false)
 
-
 UI.loadPage()

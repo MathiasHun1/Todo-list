@@ -35,8 +35,25 @@ class Storage {
 
     addnewProject(name) {
         const projects = this.getOwnProjects();
-        projects.push(new Project(name));
+        const newProject = new Project(name);
+        this.setProjectToActive(newProject);
+        projects.push(newProject);
         this.saveProjects();
+    }
+
+    deleteProject(name) {
+        const projects = this.getAllprojects();
+        const projectIndex = projects.findIndex(project => project.name === name);
+        projects.splice(projectIndex, 1);
+        projects[0].active = true;
+        this.saveProjects();
+    }
+
+    setProjectToActive(projectToSet) {
+        const projects = this.getAllprojects();
+        projects.forEach(project => project.active = false);
+        projectToSet.active = true;
+        this.saveProjects;
     }
 
     //methods for tasks
@@ -80,8 +97,8 @@ class Storage {
         const tasks = this.getAllTasks();
         const tasksByID = tasks.filter((task) => {
             return task.id === id;
-        return tasksByID;
         })
+        return tasksByID;
     }
 }
 
