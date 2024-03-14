@@ -5,13 +5,27 @@ import { Task } from "./tasks";
 class Storage {
     constructor() {
         //initialize default projects
-      this._defProjects= [];
-      this._defProjects.push(new Project('all', 'default', true));
-      this._defProjects.push(new Project('today', 'default', false));
-      this._defProjects.push(new Project('this week', 'default', false));
+      this._defProjects = [{
+        name: 'all',
+        type: 'default',
+        active: true
+      },
+      {
+        name: 'today',
+        type: 'default',
+        active: false
+      },
+      {
+        name: 'this week',
+        type: 'default',
+        active: false
+      }];
+     
+      if(!JSON.parse(localStorage.getItem('defProjects'))) {
+        localStorage.setItem('defProjects', JSON.stringify(this._defProjects))
+      }
         //initialize custom projects if exists
       this._ownProjects = JSON.parse(localStorage.getItem('projects')) || [];
-      this._allProjects = this._defProjects.concat(this._ownProjects);
         //initialize tasks
       this._tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     }
@@ -19,6 +33,7 @@ class Storage {
     // methods for projects
     saveProjects() {
         localStorage.setItem('projects', JSON.stringify(this.getOwnProjects()));
+        localStorage.setItem('defProjects', JSON.stringify(this.getDefProjects()));
     }
 
     getDefProjects() {
@@ -29,31 +44,27 @@ class Storage {
         return this._ownProjects;
     }
 
-    getAllprojects() {
-        return this._allProjects;
-    }
-
     addnewProject(name) {
         const projects = this.getOwnProjects();
         const newProject = new Project(name);
-        this.setProjectToActive(newProject);
         projects.push(newProject);
+        this.setProjectToActive(newProject);
         this.saveProjects();
     }
 
     deleteProject(name) {
-        const projects = this.getAllprojects();
+        const projects = this.getOwnProjects();
         const projectIndex = projects.findIndex(project => project.name === name);
         projects.splice(projectIndex, 1);
-        projects[0].active = true;
+        this.getDefProjects[0].active = true;
         this.saveProjects();
     }
 
     setProjectToActive(projectToSet) {
-        const projects = this.getAllprojects();
-        projects.forEach(project => project.active = false);
+        this.getDefProjects().forEach(project => project.active = false);
+        this.getOwnProjects().forEach(project => project.active = false);
         projectToSet.active = true;
-        this.saveProjects;
+        this.saveProjects();
     }
 
     //methods for tasks

@@ -5,7 +5,7 @@ export class UI {
     static loadPage() {
         UI.renderDefProjects();
         UI.renderOwnProjects();
-        EventHandler.initEventListeners();
+        EventHandler.initialize();
     }
 
     static renderDefProjects() {
@@ -25,8 +25,8 @@ export class UI {
     static renderOwnProjects() {
         const ownProjectlist = document.querySelector('.project-list');
         const ownProjects = storage.getOwnProjects();
-        console.log(ownProjects);
- 
+        UI.clearOwnProjectsCont();
+
         ownProjects.forEach(project => {
             let listItem = document.createElement('li');
             let para = document.createElement('p');
@@ -38,5 +38,34 @@ export class UI {
             listItem.appendChild(para);
             ownProjectlist.appendChild(listItem);
         })
+
+        UI.clearModalInputValue()
+        EventHandler.closeProjectModal()
+    }
+
+    static clearOwnProjectsCont() {
+        const ownProjectlist = document.querySelector('.project-list');
+        ownProjectlist.innerHTML = '';
+    }
+
+    static clearModalInputValue() {
+        const modalProjectTextinput = document.querySelector('#modal-project-textinput');
+        modalProjectTextinput.value ='';
+    }
+
+    static openProjectModal() {
+        projectModal.style.display = 'flex';
+    }
+
+    static openTaskModal() {
+        taskModal.style.display = 'flex';
+    }
+
+    static closeProjectModal() {
+        projectModal.style.display = 'none';
+    }
+
+    static closeTaskModal() {
+        taskModal.style.display = 'none';
     }
 }
