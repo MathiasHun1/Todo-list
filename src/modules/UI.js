@@ -1,4 +1,5 @@
 import { storage } from "./storage";
+import { format } from "date-fns";
 
 export class UI {
     static openProjectModalButton = document.querySelector('.add-project-button');
@@ -104,14 +105,14 @@ export class UI {
                 UI.renderTasks();
             }      
         })
-
+            //add task
         UI.modalTaskAddButton.addEventListener('click', () => {
             let projectName;
             if (['Today', 'This week', 'All'].includes(storage.getActiveProject().name)) {
                 projectName = 'All'
             } else projectName = storage.getActiveProject().name
             let description = document.querySelector('.textinput-taskmodal').value
-            let dueDate = new Date(document.querySelector('.dateinput-taskmodal').value)
+            let dueDate = format(new Date(document.querySelector('.dateinput-taskmodal').value), 'yyyy-MM-dd')
             storage.addNewTask(projectName, description, dueDate)
             
             UI.closeTaskModal()
@@ -126,7 +127,15 @@ export class UI {
                 storage.deleteTaskByDesc(descText)
                 UI.renderTasks()
             }
+            //set task to done
+            if (e.target.classList.contains('task-done-box')) {
+                const taskElement = e.target.parentNode.parentNode
+                const descText = taskElement.querySelector('.card-text').textContent
+                storage.setTaskDone(descText)
+                UI.renderTasks()
+            }
         })
+
     }
 
     static createProjectView(project) {
@@ -149,8 +158,16 @@ export class UI {
         }
         UI.ownProjectlist.appendChild(listItem);
     }
+    
+    static renderTasks() {
+        document.querySelector('.main-body').innerHTML = ''
+        const tasks = storage.filterTasks();
+        tasks.forEach((task) => {
+            UI.createTaskView(task.desc, task.dueDate, task.isDone)
+        }) 
+    }
 
-    static createTaskView(text, dueDate) {
+    static createTaskView(text, dueDate, isDone) {
         const tasksContainer = document.querySelector('.main-body')
         //creating nodes
         const cardElement = document.createElement('div')
@@ -171,14 +188,18 @@ export class UI {
         buttonsContainer.classList.add('card-buttons-cont')
         editButton.classList.add('material-symbols-outlined', 'task-edit-button')
         deleteButton.classList.add('material-symbols-outlined', 'task-delete-button')
-
+        
         //add remaining properties
         inputBox.type = 'checkbox'
         cardText.textContent = text 
         datePara.textContent = dueDate
         editButton.textContent = 'edit'
         deleteButton.textContent = 'delete'
-
+        if (isDone === true) {
+            inputBox.checked = true
+            cardElement.classList.add('task-done')
+        }
+        
         //appending each nodes to their containers
         textContainer.appendChild(inputBox)
         textContainer.appendChild(cardText)
@@ -192,13 +213,6 @@ export class UI {
         tasksContainer.appendChild(cardElement)
     }
 
-    static renderTasks() {
-        document.querySelector('.main-body').innerHTML = ''
-        const tasks = storage.filterTasks();
-        tasks.forEach((task) => {
-            UI.createTaskView(task.desc, task.dueDate)
-        }) 
-    }
 
     static removeClassActive() {
         UI.defProjectList.querySelectorAll('li').forEach(item => item.classList.remove('active'));

@@ -165,6 +165,14 @@ class Storage {
         tasks.splice(taskIndex, 1)
         this.saveTasks()
     }
+
+    setTaskDone(desc) {
+        const tasks = storage.getAllTasks()
+        console.log(desc)
+        const taskIsDone = tasks.find(task => task.desc === desc)
+        taskIsDone.isDone = !taskIsDone.isDone;
+        this.saveTasks()
+    }
 }
 
 const storage = new Storage;
