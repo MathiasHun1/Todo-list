@@ -1,6 +1,7 @@
 :root {
     --light-gray: rgb(228, 227, 227);
     --dark-gray: rgb(156, 154, 154);
+    --very-dark-gray: rgb(90, 86, 86);
     --red: rgb(253, 79, 79);
 }
 
@@ -70,6 +71,10 @@ li > img {
     margin-bottom: 4rem;
 }
 
+#side-nav-list li {
+    margin: 5px;
+}
+
 
 #side-nav-projects {
 }
@@ -131,11 +136,42 @@ li > img {
     padding: 4px;
 }
 
+.project-list-item {
+    margin: 5px;
+    position: relative;
+}
 
+.active {
+    background-color: var(--dark-gray);
+}
+
+.project-delete-button {
+    justify-self: end;
+    position: absolute;
+    right: 1rem;
+}
+
+.hidden {
+    display: none;
+}
 
 /* ############### */
 /* MAIN container */
 /* ############### */
+
+.modal-input-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.dateinput-taskmodal {
+    width: min-content;
+}
+
+.textinput-taskmodal {
+    width: 100%;
+}
 
 .main-container {
     padding: 2rem;

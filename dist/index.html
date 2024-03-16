@@ -14,7 +14,8 @@
         <!-- Default projects -->
             <nav class="side-block one">
                 <h2>Incoming</h2>
-                <ul id="side-nav-list">
+                <hr>
+                <ul class="def-project-list">
                     <li id="today">
                         <span class="material-symbols-outlined">priority_high</span>
                         <p>Today</p>
@@ -31,12 +32,12 @@
                     </li>
                 </ul>
             </nav>
-            <hr>
-        <!-- ----------------->
-
-        
-        <nav class="side-block two">
-            <h2>Projects</h2>
+            <!-- ----------------->
+            
+            
+            <nav class="side-block two">
+                <h2>Projects</h2>
+                <hr>
             <div class="projectinput-container">
                 <button class="add-project-button">
                     <p>ADD NEW</p>
@@ -52,8 +53,8 @@
             </div>
             <!-- Custom projects -->
             <nav id="side-nav-projects">
-                <ul class="project-list">
-                    <li><span class="material-symbols-outlined">person_edit</span>Hobby</li>
+                <ul class="own-project-list">
+                    <li><span class="material-symbols-outlined">person_edit</span><p>Hobby</p><span class="project-delete-button">X</span></li>
                 </ul>
             </nav>
         </nav>
@@ -63,10 +64,13 @@
     <div class="main-container">
         <!-- Tasks according to project -->
         <div class="main-header">
-            <h1 id ="project-name">Hobby</h1>
+            <h1 id ="project-name-header"></h1>
             <button class="add-task-button">Add Task +</button>
             <div class="task-modal">
-                <input class="textinput" type="text" class="new-project-input">
+                <div class="modal-input-wrapper">
+                    <input class="textinput-taskmodal" type="text" class="new-project-input">
+                    <input class="dateinput-taskmodal" type="date">
+                </div>
                 <div class="modalbuttons-container">
                     <button class="modal-task-add">ADD</button>
                     <button class="modal-task-cancel">CANCEL</button>
@@ -74,6 +78,7 @@
             </div>
         </div>
         <div class="main-body">
+            <!-- TASK ELEMENT -->
             <div class="card">
                 <div class="card-text-cont">
                     <input type="checkbox">
@@ -81,29 +86,11 @@
                 </div>
                 <p class="card-date">2031/01/01</p>
                 <div class="card-buttons-cont">
-                    <button>
-                        <img src="./images/edit.png" alt="">
-                    </button>
-                    <button>
-                        <img src="./images/delete.png" alt="">
-                    </button>
+                    <button class="material-symbols-outlined">edit</button>
+                    <button class="material-symbols-outlined">delete</button>
                 </div>
             </div>
-            <div class="card">
-                <div class="card-text-cont">
-                    <input type="checkbox">
-                    <p class="card-text">Fát kivágni</p>
-                </div>
-                <p class="card-date">2031/01/01</p>
-                <div class="card-buttons-cont">
-                    <button>
-                        <img src="./images/edit.png" alt="">
-                    </button>
-                    <button>
-                        <img src="./images/delete.png" alt="">
-                    </button>
-                </div>
-            </div>
+            <!-- ---------------------- -->
         </div>
     </div>
     <script src="bundle.js"></script>
