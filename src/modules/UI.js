@@ -14,13 +14,14 @@ export class UI {
     static defProjectList = document.querySelector('.def-project-list');
     static ownProjectlist = document.querySelector('.own-project-list');
     static projectNameHeader = document.querySelector('#project-name-header');
-
+    static modalTaskAddButton = document.querySelector('.modal-task-add');
+    static mainContainer = document.querySelector('.main-container');
 
     static loadPage() {
         UI.renderDefProjects();
         UI.renderOwnProjects();
         UI.initEventHandlers();
-        UI.createTaskView()
+        UI.renderTasks('Today')
 }
 
     static renderDefProjects() {
@@ -33,21 +34,28 @@ export class UI {
             today.classList.add('active');
             storage.setProjectToActive('Today');
             UI.renderOwnProjects()
+            UI.renderTasks()
+
         });
         thisWeek.addEventListener('click', () => {
             UI.removeClassActive()
             thisWeek.classList.add('active');
             storage.setProjectToActive('This week');
             UI.renderOwnProjects()
+            UI.renderTasks()
+
         });
         all.addEventListener('click', () => {
             UI.removeClassActive()
             all.classList.add('active');
             storage.setProjectToActive('All');
             UI.renderOwnProjects()
+            UI.renderTasks()
         });
             today.classList.add('active');
             UI.projectNameHeaderUpdate()
+            UI.renderTasks()
+
 
     }
 
@@ -71,16 +79,19 @@ export class UI {
             storage.addnewProject(UI.modalProjectTextinput.value);
             UI.removeClassActive();
             UI.renderOwnProjects();
-            })  
+            UI.renderTasks();
+        })  
         // listeners to the ownProjects container
         UI.ownProjectlist.addEventListener('click', (e) => {
             // delete project
             if (e.target.classList.contains('project-delete-button')) {
                 const projectName = e.target.previousSibling.textContent; //name of project
                 storage.deleteProject(projectName);
+                storage.deleteTaskByProjectName(projectName);
                 storage.setProjectToActive('Today');
                 UI.renderDefProjects()
                 UI.renderOwnProjects()
+                UI.renderTasks()
             }
             //set project to active
             if (e.target.classList.contains('project-name')) {
@@ -90,6 +101,30 @@ export class UI {
                 UI.removeClassActive() 
                 currentProject.classList.add('active')
                 UI.renderOwnProjects()
+                UI.renderTasks();
+            }      
+        })
+
+        UI.modalTaskAddButton.addEventListener('click', () => {
+            let projectName;
+            if (['Today', 'This week', 'All'].includes(storage.getActiveProject().name)) {
+                projectName = 'All'
+            } else projectName = storage.getActiveProject().name
+            let description = document.querySelector('.textinput-taskmodal').value
+            let dueDate = new Date(document.querySelector('.dateinput-taskmodal').value)
+            storage.addNewTask(projectName, description, dueDate)
+            
+            UI.closeTaskModal()
+            UI.renderTasks()
+        })
+
+        UI.mainContainer.addEventListener('click', (e) => {
+            //delete task
+            if (e.target.classList.contains('task-delete-button')) {
+                const taskElement = e.target.parentNode.parentNode
+                const descText = taskElement.querySelector('.card-text')
+                storage.deleteTaskByDesc(descText)
+                UI.renderTasks()
             }
         })
     }
@@ -115,7 +150,7 @@ export class UI {
         UI.ownProjectlist.appendChild(listItem);
     }
 
-    static createTaskView(text='default', dueDate='default date') {
+    static createTaskView(text, dueDate) {
         const tasksContainer = document.querySelector('.main-body')
         //creating nodes
         const cardElement = document.createElement('div')
@@ -155,6 +190,14 @@ export class UI {
 
 
         tasksContainer.appendChild(cardElement)
+    }
+
+    static renderTasks() {
+        document.querySelector('.main-body').innerHTML = ''
+        const tasks = storage.filterTasks();
+        tasks.forEach((task) => {
+            UI.createTaskView(task.desc, task.dueDate)
+        }) 
     }
 
     static removeClassActive() {

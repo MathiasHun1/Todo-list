@@ -1,5 +1,5 @@
 import { Project } from "./project";
-import { isToday, isBefore, endOfWeek, format } from "date-fns";
+import { isToday, isBefore, endOfWeek, format, compareAsc } from "date-fns";
 import { Task } from "./tasks";
 
 class Storage {
@@ -88,13 +88,18 @@ class Storage {
     }
 
     //methods for tasks
-    saveTasks() {
-        localStorage.setItem('tasks', JSON.stringify(this.getAllTasks()));
+    setTasks(tasks) {
+        this._tasks = tasks
     }
 
-    addNewTask(project='All', desc, dueDate, status=false) {
+    saveTasks() {
+        const tasks = this.getAllTasks()
+        localStorage.setItem('tasks', JSON.stringify(this.getAllTasks().sort((a, b) => compareAsc(a.dueDate, b.dueDate))));
+    }
+
+    addNewTask(projectName, desc, dueDate, status=false) {
         const tasks = storage.getAllTasks()
-        const newTask = new Task(project='All', desc, dueDate, status=false);
+        const newTask = new Task(projectName, desc, dueDate, status=false);
         tasks.push(newTask);
         this.saveTasks();
     }
@@ -130,6 +135,35 @@ class Storage {
             return task.id === id;
         })
         return tasksByID;
+    }
+
+    getTasksByProject() {
+        const tasks = storage.getAllTasks().filter(task => storage.getActiveProject().name === task.project)
+        return tasks
+    }
+
+    filterTasks() {
+        if (storage.getActiveProject().name === 'All') {
+            return storage.getAllTasks()
+        } else if (storage.getActiveProject().name === 'Today') {
+            return storage.getTodayTasks()
+        } else if (storage.getActiveProject().name === 'This Week') {
+            return storage.getThisWeekTasks();
+        } else return storage.getTasksByProject()    
+    }
+
+    deleteTaskByProjectName(projectName) {
+        const tasks = storage.getAllTasks()
+        const tasksToKeep = tasks.filter(task => task.project !== projectName)
+        this.setTasks(tasksToKeep)
+        this.saveTasks()
+    }
+
+    deleteTaskByDesc(desc) {
+        const tasks = storage.getAllTasks()
+        const taskIndex = tasks.findIndex(task => task.desc === desc)
+        tasks.splice(taskIndex, 1)
+        this.saveTasks()
     }
 }
 
