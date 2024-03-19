@@ -173,6 +173,7 @@ export class UI {
                 descContainer.appendChild(newDateInput)
                 descContainer.appendChild(saveButton)
                 descContainer.appendChild(cancelButton)
+                newDescInput.focus()
 
             }
         })
