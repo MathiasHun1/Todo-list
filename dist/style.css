@@ -305,4 +305,8 @@ li > img {
     filter: brightness(0.8);
 }
 
+.block-name-text {
+    font-weight: 500;
+}
+
 
