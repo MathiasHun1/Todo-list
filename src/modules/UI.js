@@ -134,6 +134,47 @@ export class UI {
                 storage.setTaskDone(descText)
                 UI.renderTasks()
             }
+            //edit task
+            if (e.target.classList.contains('task-edit-button')) {
+                const taskElement = e.target.parentNode.parentNode
+                const currentTaskDescElem = taskElement.querySelector('.card-text')
+                const currentTaskDesc = currentTaskDescElem.textContent
+                const currentTaskDueDate = taskElement.querySelector('.card-date')
+                const currentTaskDueDateTemp = currentTaskDueDate.textContent
+                currentTaskDueDate.textContent = ""
+                //create input element for editing desc
+                const newDescInput = document.createElement('input')
+                newDescInput.classList.add('task-desc-edit-input')
+                newDescInput.type = 'text'
+                //create input element for editing date
+                const newDateInput = document.createElement('input')
+                newDateInput.classList.add('task-dueDate-edit-input')
+                newDateInput.type = 'date'
+                //create SAVE button element
+                const saveButton = document.createElement('button')
+                saveButton.classList.add('task-edit-save-button')
+                saveButton.textContent = 'Save'
+                saveButton.addEventListener('click', () => {
+                    storage.editTask(currentTaskDesc, newDescInput.value, newDateInput.value)
+                    UI.renderTasks()
+                })
+                //create Cancel button element
+                const cancelButton = document.createElement('button')
+                cancelButton.classList.add('task-edit-cancel-button')
+                cancelButton.textContent = 'Cancel'
+                cancelButton.addEventListener('click', () => {
+                    storage.editTask(currentTaskDesc, currentTaskDesc, currentTaskDueDateTemp)
+                    UI.renderTasks()
+                })
+
+                const descContainer = taskElement.querySelector('.card-text-cont')
+                console.log(descContainer)
+                descContainer.replaceChild(newDescInput, currentTaskDescElem)
+                descContainer.appendChild(newDateInput)
+                descContainer.appendChild(saveButton)
+                descContainer.appendChild(cancelButton)
+
+            }
         })
 
     }
@@ -197,7 +238,7 @@ export class UI {
         deleteButton.textContent = 'delete'
         if (isDone === true) {
             inputBox.checked = true
-            cardElement.classList.add('task-done')
+            textContainer.classList.add('task-done')
         }
         
         //appending each nodes to their containers
@@ -209,7 +250,7 @@ export class UI {
         cardElement.appendChild(datePara)
         cardElement.appendChild(buttonsContainer)
 
-
+        //add task element to the main container
         tasksContainer.appendChild(cardElement)
     }
 

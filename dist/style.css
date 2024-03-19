@@ -251,5 +251,5 @@ li > img {
 }
 
 .task-done {
-    text-decoration: 5px line-through;
+    text-decoration: 3px line-through;
 }

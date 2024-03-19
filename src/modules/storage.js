@@ -147,7 +147,7 @@ class Storage {
             return storage.getAllTasks()
         } else if (storage.getActiveProject().name === 'Today') {
             return storage.getTodayTasks()
-        } else if (storage.getActiveProject().name === 'This Week') {
+        } else if (storage.getActiveProject().name === 'This week') {
             return storage.getThisWeekTasks();
         } else return storage.getTasksByProject()    
     }
@@ -168,9 +168,16 @@ class Storage {
 
     setTaskDone(desc) {
         const tasks = storage.getAllTasks()
-        console.log(desc)
         const taskIsDone = tasks.find(task => task.desc === desc)
         taskIsDone.isDone = !taskIsDone.isDone;
+        this.saveTasks()
+    }
+
+    editTask(desc, newDesc, newDueDate) {
+        const tasks = storage.getAllTasks()
+        const selectedTask = tasks.find(task => task.desc === desc)
+        selectedTask.desc = newDesc
+        selectedTask.dueDate = newDueDate
         this.saveTasks()
     }
 }
