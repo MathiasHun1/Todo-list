@@ -123,7 +123,7 @@ export class UI {
             //delete task
             if (e.target.classList.contains('task-delete-button')) {
                 const taskElement = e.target.parentNode.parentNode
-                const descText = taskElement.querySelector('.card-text')
+                const descText = taskElement.querySelector('.card-text').textContent
                 storage.deleteTaskByDesc(descText)
                 UI.renderTasks()
             }

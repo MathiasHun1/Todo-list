@@ -2,9 +2,13 @@ const path = require('path');
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'production',
+  mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  devServer: {
+    hot: true,
+    static: { directory: path.resolve(__dirname, 'dist') },
+  }
 };

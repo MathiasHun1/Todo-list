@@ -162,6 +162,8 @@ class Storage {
     deleteTaskByDesc(desc) {
         const tasks = storage.getAllTasks()
         const taskIndex = tasks.findIndex(task => task.desc === desc)
+        console.log(tasks)
+        console.log(taskIndex)
         tasks.splice(taskIndex, 1)
         this.saveTasks()
     }
