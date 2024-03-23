@@ -309,4 +309,11 @@ li > img {
     font-weight: 500;
 }
 
+@media only screen and (max-width: 600px) {
+
+    * {
+        background-color: blue;
+    }
+}
+
 
